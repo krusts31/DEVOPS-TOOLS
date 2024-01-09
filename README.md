@@ -1,12 +1,10 @@
-# Remaster debian iso with Docker to be FAI
+# Remaster debian iso with Docker
 #### comes with a nice post install dir
 
-This guide provides step-by-step instructions for remastering debian iso using docker.
-
 ## Prerequisites
-
-1. **Download Debian ISO**: First, download the Debian ISO file from the official website. Use the link [Debian ISO Download](https://www.debian.org/distrib/netinst).
-
+1. Debian iso file
+2. Docker
+   
 ## Installation Process
 
 ### Step 1: Modify isolinux.cfg
