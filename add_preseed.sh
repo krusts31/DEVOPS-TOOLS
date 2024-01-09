@@ -1,34 +1,33 @@
-set -x
+set -ex
 
-#set the articeture for your installation
-ARC="amd"
-DEST="/isofiles"
+#create tmp dir
+ISO_FILES="$(mktemp -d)"
 
-xorriso -osirrox on -indev\
-	/tmp/debian-12.4.0-amd64-netinst.iso\
-	-extract / $DEST
+#extract files
+xorriso -osirrox on -indev /tmp/$NAME_OF_ISO -extract / $ISO_FILES
 
-chmod +w -R $DEST/install.$ARC/
+chmod +w -R $ISO_FILES/install.amd/
+gunzip $ISO_FILES/install.amd/initrd.gz
 
-gunzip $DEST/install.$ARC/initrd.gz
+# contains all of the files that we want on the remote system
+tar -c -z -f /tmp/postinstall.tar.gz -C /tmp postinstall.d
 
-echo preseed.cfg | cpio -H newc -o -A -F $DEST/install.$ARC/initrd
+(cd /tmp; echo preseed.cfg | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
+(cd /tmp; echo postinstall.tar.gz | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
+(cd /tmp; echo postinstall | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
 
-gzip $DEST/install.$ARC/initrd
+#change the grub file to start the instalation by it self
+rm -f $ISO_FILES/isolinux/isolinux.cfg
+cp /tmp/isolinux.cfg $ISO_FILES/isolinux/isolinux.cfg
+chmod -w $ISO_FILES/isolinux/isolinux.cfg
 
-chmod -w -R $DEST/install.$ARC/
+gzip $ISO_FILES/install.amd/initrd
+chmod -w -R $ISO_FILES/install.amd/
 
-chmod +w $DEST/md5sum.txt
+chmod +w $ISO_FILES/md5sum.txt
+(cd $ISO_FILES; md5sum `find -follow -type f` > md5sum.txt)
+chmod -w $ISO_FILES/md5sum.txt
 
-find $DEST -follow -type f ! -name md5sum.txt -print0 |\
-	xargs -0 md5sum > $DEST/md5sum.txt
+xorriso -as mkisofs -o  /tmp/$OUTPUT_ISO_NAME -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin -c isolinux/boot.cat -b isolinux/isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot -isohybrid-gpt-basdat $ISO_FILES
 
-chmod -w $DEST/md5sum.txt
-
-cp /tmp/preseed.cfg $DEST/preseed.cfg
-
-genisoimage -r -J -b isolinux/isolinux.bin -c isolinux/boot.cat \
-	-no-emul-boot -boot-load-size 4 -boot-info-table \
-	-o /tmp/$NAME $DEST
-
-cp /tmp/$NAME /result/$NAME
+mv /tmp/$OUTPUT_ISO_NAME /result/$OUTPUT_ISO_NAME
