@@ -1,21 +1,22 @@
-Download debian.iso https://www.debian.org/distrib/netinst
+# Remaster debian iso with Docker to be FAI
+#### comes with a nice post install dir
 
-There are a few moving parts. I have not touch all types of debian instalations.
-Just amd. 
+This guide provides step-by-step instructions for remastering debian iso using docker.
 
-isoliunx.cfg is used to start the instalation with out having to hit enter
-in the instalation menu.
+## Prerequisites
 
-```
+1. **Download Debian ISO**: First, download the Debian ISO file from the official website. Use the link [Debian ISO Download](https://www.debian.org/distrib/netinst).
+
+## Installation Process
+
+### Step 1: Modify isolinux.cfg
+
+The `isolinux.cfg` file automates the installation process without the need to interact with the installation menu.
+
+```cfg
 default custom-saltstack
 label custom-saltstack
   menu label ^Install Debian Server w/ Saltstack minion
   kernel /install.amd/vmlinuz
   append  vga=768 console-setup/ask_detect=false initrd=/install.amd/initrd.gz quiet ---
-```
-
-replace .amd with the path you would need.
-
-```bash
-curl -o "debian-12.iso" "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.4.0-amd64-netinst.iso"
 ```

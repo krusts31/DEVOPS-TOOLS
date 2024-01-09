@@ -49,3 +49,6 @@ chmod 600 /root/.bash_login
 chown -R debian:debian /home/debian
 chmod 700 /home/debian
 chmod 600 /home/debian/.bash_login /home/debian/.ssh/authorized_keys
+
+rm -rf /etc/ssh/sshd_config
+mv /tmp/postinstall.d/sshd_config /etc/ssh/sshd_config
