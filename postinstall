@@ -9,7 +9,7 @@ echo -n > /etc/motd
 DEBIAN_FRONTEND=noninteractive apt-get purge -y laptop-detect tasksel emacsen-common ienglish-common ispell
 
 # install some additional packages
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends linux-headers-amd64 openssh-server sudo time openssl gnutls-bin zip unzip bzip2 lynx vim vim-scripts curl whois net-tools patch telnet sqlite3 strace lsof less screen rsync git git-lfs dos2unix myrepos traceroute bash-completion socat busybox psmisc man-db dnsutils unattended-upgrades gpg-agent gnupg software-properties-common tcpdump make gzrt jq bash zsh htop dbus-user-session fuse3 acl python3-venv python3-pip python3-setuptools python3-wheel python3-psutil python3-pylibacl python3-sh python3-prometheus-client rdiff-backup xfsprogs smartmontools
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends linux-headers-amd64 openssh-server sudo time openssl gnutls-bin zip unzip bzip2 lynx vim vim-scripts curl whois screen git gpg-agent gnupg software-properties-common tcpdump make zsh ufw
 
 # members of `sudo` group are not asked for password.
 sed -i 's/^%sudo\tALL=(ALL:ALL) ALL/%sudo\tALL=(ALL:ALL) NOPASSWD:ALL/' /etc/sudoers
@@ -31,21 +31,21 @@ cp /tmp/postinstall.d/apt.conf.d/20auto-upgrades /etc/apt/apt.conf.d/20auto-upgr
 cp /tmp/postinstall.d/vimrc /root/.vimrc
 cp /tmp/postinstall.d/bash_login /root/.bash_login
 
-# add our sudoers file for paul
-cp /tmp/postinstall.d/sudoers /etc/sudoers.d/paul
-chmod 400 /etc/sudoers.d/paul
+# add our sudoers file for debian
+cp /tmp/postinstall.d/sudoers /etc/sudoers.d/debian
+chmod 400 /etc/sudoers.d/debian
 
-# install ssh keys and other things for paul user
-mkdir -m700 -p /home/paul/.ssh
-cp /tmp/postinstall.d/authorized_keys /home/paul/.ssh/authorized_keys
-cp /tmp/postinstall.d/vimrc /home/paul/.vimrc
-cp /tmp/postinstall.d/bash_login /home/paul/.bash_login
+# install ssh keys and other things for debian user
+mkdir -m700 -p /home/debian/.ssh
+cp /tmp/postinstall.d/authorized_keys /home/debian/.ssh/authorized_keys
+cp /tmp/postinstall.d/vimrc /home/debian/.vimrc
+cp /tmp/postinstall.d/bash_login /home/debian/.bash_login
 
 # fix permissions on root home directory
 chmod 700 /root
 chmod 600 /root/.bash_login
 
-# fix permissions on paul home directory
-chown -R paul:paul /home/paul
-chmod 700 /home/paul
-chmod 600 /home/paul/.bash_login /home/paul/.ssh/authorized_keys
+# fix permissions on debian home directory
+chown -R debian:debian /home/debian
+chmod 700 /home/debian
+chmod 600 /home/debian/.bash_login /home/debian/.ssh/authorized_keys
