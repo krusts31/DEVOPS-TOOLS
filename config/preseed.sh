@@ -10,15 +10,15 @@ chmod +w -R $ISO_FILES/install.amd/
 gunzip $ISO_FILES/install.amd/initrd.gz
 
 # contains all of the files that we want on the remote system
-tar -c -z -f /tmp/postinstall.tar.gz -C /tmp postinstall.d
+tar -c -z -f /tmp/config/postinstall/postinstall-baisic/postinstall.tar.gz -C /tmp/config/postinstall/postinstall-baisic/ postinstall.d
 
-(cd /tmp; echo preseed.cfg | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
-(cd /tmp; echo postinstall.tar.gz | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
-(cd /tmp; echo postinstall | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
+(cd /tmp/config; echo preseed.cfg | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
+(cd /tmp/config/postinstall/postinstall-baisic; echo postinstall.tar.gz | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
+(cd /tmp/config/postinstall/postinstall-baisic; echo postinstall | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
 
 #change the grub file to start the instalation by it self
 rm -f $ISO_FILES/isolinux/isolinux.cfg
-cp /tmp/isolinux.cfg $ISO_FILES/isolinux/isolinux.cfg
+cp /tmp/config/isolinux.cfg $ISO_FILES/isolinux/isolinux.cfg
 chmod -w $ISO_FILES/isolinux/isolinux.cfg
 
 gzip $ISO_FILES/install.amd/initrd
