@@ -18,3 +18,4 @@ label custom-saltstack
   kernel /install.amd/vmlinuz
   append  vga=768 console-setup/ask_detect=false initrd=/install.amd/initrd.gz quiet ---
 ```
+

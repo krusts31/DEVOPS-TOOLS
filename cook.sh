@@ -13,5 +13,6 @@ fi
 docker build -t build-iso . &&\
 	docker run -e NAME_OF_ISO=$NAME_OF_ISO\
 	-e OUTPUT_ISO_NAME=$OUTPUT_ISO_NAME\
+	-e RECIPE=$1\
 	-v $PWD/$OUTPUT_ISO_NAME:/result/$OUTPUT_ISO_NAME\
 	build-iso

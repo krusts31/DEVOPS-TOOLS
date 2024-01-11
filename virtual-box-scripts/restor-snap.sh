@@ -1,1 +1,1 @@
-VBoxManage snapshot "DebianVM" restore "Initial Setup"
+VBoxManage snapshot "DebianVM" restore "fixed resolve"
