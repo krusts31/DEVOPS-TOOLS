@@ -13,13 +13,9 @@ RUN apt-get update &&\
 	genisoimage\
 	gzip
 
-COPY preseed.cfg /tmp/preseed.cfg
-COPY add_preseed.sh add_preseed.sh
-COPY postinstall /tmp/postinstall
-COPY postinstall.d/ /tmp/postinstall.d/
-COPY isolinux.cfg /tmp/isolinux.cfg
+COPY cook-book/ /tmp/cook-book/
 COPY debian-12.4.0-amd64-netinst.iso /tmp/debian-12.4.0-amd64-netinst.iso
 
-ENTRYPOINT ["bash", "add_preseed.sh"]
+ENTRYPOINT ["bash", "/tmp/cook-book/preseed.sh"]
 
 CMD ["/bin/bash"]

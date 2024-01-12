@@ -10,15 +10,15 @@ chmod +w -R $ISO_FILES/install.amd/
 gunzip $ISO_FILES/install.amd/initrd.gz
 
 # contains all of the files that we want on the remote system
-tar -c -z -f /tmp/config/postinstall/postinstall-baisic/postinstall.tar.gz -C /tmp/config/postinstall/postinstall-baisic/ postinstall.d
+tar -c -z -f /tmp/cook-book/$RECIPE/postinstall.tar.gz -C /tmp/cook-book/$RECIPE postinstall.d
 
-(cd /tmp/config; echo preseed.cfg | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
-(cd /tmp/config/postinstall/postinstall-baisic; echo postinstall.tar.gz | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
-(cd /tmp/config/postinstall/postinstall-baisic; echo postinstall | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
+(cd /tmp/cook-book/$RECIPE; echo preseed.cfg | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
+(cd /tmp/cook-book/$RECIPE; echo postinstall.tar.gz | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
+(cd /tmp/cook-book/$RECIPE; echo postinstall | cpio -H newc -o -A -F $ISO_FILES/install.amd/initrd)
 
 #change the grub file to start the instalation by it self
 rm -f $ISO_FILES/isolinux/isolinux.cfg
-cp /tmp/config/isolinux.cfg $ISO_FILES/isolinux/isolinux.cfg
+cp /tmp/cook-book/isolinux.cfg $ISO_FILES/isolinux/isolinux.cfg
 chmod -w $ISO_FILES/isolinux/isolinux.cfg
 
 gzip $ISO_FILES/install.amd/initrd
