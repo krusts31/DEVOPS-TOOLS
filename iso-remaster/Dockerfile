@@ -16,6 +16,6 @@ RUN apt-get update &&\
 COPY cook-book/ /tmp/cook-book/
 COPY debian-12.4.0-amd64-netinst.iso /tmp/debian-12.4.0-amd64-netinst.iso
 
-ENTRYPOINT ["bash", "/tmp/cook-book/preseed.sh"]
+WORKDIR /tmp/cook-book/docker
 
-CMD ["/bin/bash"]
+CMD ["bash", "preseed.sh"]

@@ -1,0 +1,4 @@
+resources:
+  my-tmp-ec2:
+    Type:
+    Properties: {}

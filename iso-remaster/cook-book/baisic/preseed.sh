@@ -1,7 +1,10 @@
+#!/bin/sh
+
 set -ex
 
 #create tmp dir
 ISO_FILES="$(mktemp -d)"
+CURDIR="$(dirname $0)"
 
 #extract files
 xorriso -osirrox on -indev /tmp/$NAME_OF_ISO -extract / $ISO_FILES
@@ -31,3 +34,5 @@ chmod -w $ISO_FILES/md5sum.txt
 xorriso -as mkisofs -o  /tmp/$OUTPUT_ISO_NAME -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin -c isolinux/boot.cat -b isolinux/isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot -isohybrid-gpt-basdat $ISO_FILES
 
 mv /tmp/$OUTPUT_ISO_NAME /result/$OUTPUT_ISO_NAME
+
+#/bin/bash

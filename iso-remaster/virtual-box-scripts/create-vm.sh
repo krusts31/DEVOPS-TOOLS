@@ -2,7 +2,7 @@
 VBoxManage createvm --name "DebianVM" --ostype "Debian_64" --register
 
 # Set memory size
-VBoxManage modifyvm "DebianVM" --memory 8192 --cpu 4
+VBoxManage modifyvm "DebianVM" --memory 8192 --cpus 4
 
 # Attach the virtual hard disk
 VBoxManage storagectl "DebianVM" --name "SATA Controller" --add sata --controller IntelAhci
@@ -23,4 +23,5 @@ VBoxManage modifyvm "DebianVM" --nic1 nat
 # VBoxManage modifyvm "DebianVM" --nic2 bridged --bridgeadapter2 your_network_adapter_name
 
 # Start the VM (if you want to start it immediately)
+VBoxManage modifyvm "DebianVM" --natpf1 "guestssh,tcp,,4242,,22"
 VBoxManage startvm "DebianVM"
