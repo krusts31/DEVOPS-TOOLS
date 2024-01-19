@@ -1,1 +1,1 @@
-aws cloudformation delete-stack --stack-name my-random-stack
+aws cloudformation delete-stack --stack-name $1

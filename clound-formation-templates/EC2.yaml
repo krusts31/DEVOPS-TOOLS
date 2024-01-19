@@ -1,4 +1,9 @@
-resources:
-  my-tmp-ec2:
-    Type:
-    Properties: {}
+---
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: ap-southeast-2a
+      InstanceType: t2.xlarge
+      ImageId: ami-08e168f4c7bff7921
+      KeyName: ssh-key-ap-southeast-2
